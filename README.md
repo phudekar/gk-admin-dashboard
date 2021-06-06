@@ -20,6 +20,7 @@ Admin can use the checkbox at the header to select or deselect items displayed i
 - The code is organized into Pages and Components. Page components need store to operate where as common components does not depend on any external data store.
 - Typescript has been used to add support for type safety.
 - This was a simple application, hence state management is handled with ReactContext apis and hooks, but in more complex project a Redux kind of state store would be more suitable.
+- Test coverage is slightly low because the type definitions have not been moved out
 
 ## Available Scripts
 
@@ -35,7 +36,7 @@ The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
 ### Running tests:
-> #### `npm test`
+> #### `npm run test:ci`
 
 This command launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
