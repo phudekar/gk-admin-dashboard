@@ -1,6 +1,6 @@
 import React from 'react';
 
-function SearchBox<T>({ data = [], comparer, placeholder, onSearch }: SearchBoxProps<T>) {
+function SearchBox<T>({ data = [], comparer, placeholder = "Search", onSearch }: SearchBoxProps<T>) {
     return (
         <input type="text" placeholder={placeholder}
             onChange={e => {
@@ -8,7 +8,7 @@ function SearchBox<T>({ data = [], comparer, placeholder, onSearch }: SearchBoxP
                 if (query) {
                     const filteredData = [...data.filter((item: T) =>
                         comparer ? comparer(item, query)
-                            : `${item}` === query)];
+                            : `${item}`.toLowerCase().indexOf(query) >= 0)];
                     onSearch([...filteredData]);
                 } else {
                     onSearch([...data])
@@ -19,7 +19,7 @@ function SearchBox<T>({ data = [], comparer, placeholder, onSearch }: SearchBoxP
 }
 
 export type SearchBoxProps<T> = {
-    placeholder: string,
+    placeholder?: string,
     data?: Array<T>,
     comparer?: (item: any, query: string) => boolean,
     onSearch: (a: Array<T>) => void
