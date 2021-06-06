@@ -4,6 +4,23 @@ This code attempts to build a solution to the problem defined by [Geektrust](htt
 
 The project is bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Functionality Available:
+
+An Administrator can use this UI dashboard to view all the user with one page at a time. Admin can also edit or delete individual user from the user rows.
+
+Admin can use the search bar given at the top to filter users by name, email or their role.
+
+Admin can use the checkbox at the header to select or deselect items displayed in current page.
+
+## Development Notes:
+
+- This project uses React.js to create UI by composing smaller components. 
+- A global state store is used whenever there was a need to share data between multiple components.
+- Unit tests have been added for individual components
+- The code is organized into Pages and Components. Page components need store to operate where as common components does not depend on any external data store.
+- Typescript has been used to add support for type safety.
+- This was a simple application, hence state management is handled with ReactContext apis and hooks, but in more complex project a Redux kind of state store would be more suitable.
+
 ## Available Scripts
 
 Navigate to the project directory
