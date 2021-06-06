@@ -19,21 +19,21 @@ test('should render pagination', () => {
 })
 
 test('should return true if name matches with query', () => {
-    const user = { name: 'John Doe', email: 'jhon.doe@abc.com', role: Role.Member}
+    const user = { id: "1", name: 'John Doe', email: 'jhon.doe@abc.com', role: Role.Member }
     expect(userComparer(user, 'doe')).toBeTruthy()
 })
 
 test('should return true if email matches with query', () => {
-    const user = { name: 'John Doe', email: 'jhon.doe@abc.com', role: Role.Member}
+    const user = { id: "1", name: 'John Doe', email: 'jhon.doe@abc.com', role: Role.Member }
     expect(userComparer(user, 'abc')).toBeTruthy()
 })
 
 test('should return true if role matches with query', () => {
-    const user = { name: 'John Doe', email: 'jhon.doe@abc.com', role: Role.Member}
+    const user = { id: "1", name: 'John Doe', email: 'jhon.doe@abc.com', role: Role.Member }
     expect(userComparer(user, 'member')).toBeTruthy()
 })
 
 test('should return false if nothing matches with query', () => {
-    const user = { name: 'John Doe', email: 'jhon.doe@abc.com', role: Role.Member}
+    const user = { id: "1", name: 'John Doe', email: 'jhon.doe@abc.com', role: Role.Member }
     expect(userComparer(user, 'admin')).toBeFalsy()
 })

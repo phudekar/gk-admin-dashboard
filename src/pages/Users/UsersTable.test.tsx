@@ -21,8 +21,8 @@ test('should render empty table', () => {
 
 test('should render user row', () => {
     const users: Array<User> = [
-        { name: 'John Doe', email: 'john.doe@yahoo.com', role: Role.Member },
-        { name: 'Jane Doe', email: 'jane.doe@yahoo.com', role: Role.Admin }
+        { id: '1', name: 'John Doe', email: 'john.doe@yahoo.com', role: Role.Member },
+        { id: '2', name: 'Jane Doe', email: 'jane.doe@yahoo.com', role: Role.Admin }
     ]
     const { container } = render(<UsersTable users={users} />)
     const tbody = container.querySelector('tbody')
