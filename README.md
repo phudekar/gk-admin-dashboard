@@ -27,6 +27,9 @@ Admin can use the checkbox at the header to select or deselect items displayed i
 Navigate to the project directory
 
 ### Starting the dev server:
+
+Install the dependencies using `npm install` in application source directory.
+
 > #### `npm start`
 
 This command runs the app in the development mode.\
