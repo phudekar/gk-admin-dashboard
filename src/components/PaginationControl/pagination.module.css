@@ -1,0 +1,17 @@
+.container {
+    margin: 12px;
+    text-align: center;
+}
+
+.specialButtons {
+    background: rgb(91, 214, 251);
+}
+
+.container button {
+    width: 28px;
+    border-radius: 14px;
+    height: 28px;
+    margin: 2px;
+    border: solid gray 1px;
+    cursor: pointer;
+}

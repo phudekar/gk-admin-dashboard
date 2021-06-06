@@ -2,6 +2,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDoubleLeft, faAngleLeft, faAngleRight, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons'
 import React from 'react';
+import styles from './pagination.module.css';
 
 const PaginationControl = ({ page = 1, pageSize = 10,
     totalItems = 0, maxPageControls = 5,
@@ -9,7 +10,7 @@ const PaginationControl = ({ page = 1, pageSize = 10,
     const additionalPage = !totalItems || !pageSize || totalItems % pageSize !== 0 ? 1 : 0
     const totalPages = (parseInt(totalItems / pageSize + '') || 0) + additionalPage;
     return (
-        <div>
+        <div className={styles.container}>
             <SpecialButton icon={faAngleDoubleLeft} disabled={page === 1}
                 onClick={() => onPageChange(1)} testId="first-page"/>
             <SpecialButton icon={faAngleLeft} disabled={page === 1}
@@ -34,7 +35,7 @@ const PaginationControl = ({ page = 1, pageSize = 10,
 }
 
 const SpecialButton = ({ icon, disabled, testId, onClick }: SpecialButtonPropTypes) => {
-    return <button data-testid={testId} disabled={disabled} onClick={onClick}>
+    return <button className={styles.specialButtons} data-testid={testId} disabled={disabled} onClick={onClick}>
         <FontAwesomeIcon icon={icon} />
     </button>
 }

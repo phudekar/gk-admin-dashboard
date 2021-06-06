@@ -1,21 +1,15 @@
-import React, { useState } from 'react';
-import { Role, User } from '../../types';
+import React, { useContext, useEffect } from 'react';
+import { fetchUsers } from '../../actions/usersActions';
+import { store } from '../../store';
 import Users from './Users';
 
 const UsersPage = () => {
-    const users: Array<User> = [
-        { id: '1', name: 'John Doe', email: 'john.doe@yahoo.com', role: Role.Member },
-        { id: '2', name: 'Jane Doe', email: 'jane.doe@yahoo.com', role: Role.Admin }
-    ]
+    const { state }: any = useContext(store);
+    useEffect(() => {
+        fetchUsers()
+    }, [])
 
-    const [activeUsers, setActiveUsers] = useState(users);
-
-    const deleteUsers = (ids: Array<string>) => {
-        setActiveUsers([...activeUsers.filter(user =>
-            ids.indexOf(user.id) < 0)])
-    }
-
-    return <Users users={activeUsers} onDeleteUsers={deleteUsers} />
+    return <Users users={state.usersState?.users} />
 }
 
 export default UsersPage;

@@ -1,17 +1,19 @@
 import React from 'react'
 import { User } from '../../types';
 import UserRow from './UserRow';
+import styles from './users.module.css';
 
-const UsersTable = ({ users = [], selectedUsers = [], onSelected, onDeselected }: UsersTableProps) => {
+const UsersTable = ({ users = [], allSelected = false, onSelectAllChanged }: UsersTableProps) => {
     return (
-        <table>
+        <table className={styles.usersTable}>
             <thead>
                 <tr>
-                    <td><input type="checkbox" data-testid="select-all"
-                        onChange={e => e.target.checked
-                            ? onSelected && onSelected(users.map(u => u.id))
-                            : onDeselected && onDeselected(users.map(u => u.id))
-                        } /></td>
+                    <td><input type="checkbox"
+                        checked={allSelected}
+                        data-testid="select-all"
+                        onChange={e => {
+                            onSelectAllChanged && onSelectAllChanged(e.target.checked)
+                        }} /></td>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
@@ -21,11 +23,7 @@ const UsersTable = ({ users = [], selectedUsers = [], onSelected, onDeselected }
             <tbody>
                 {
                     users?.map(user =>
-                        <UserRow key={user.name} user={user} isSelected={selectedUsers.indexOf(user.id) >= 0}
-                            onSelected={id => onSelected && onSelected([id])}
-                            onDeselected={id => onDeselected && onDeselected([id])}
-
-                        />
+                        <UserRow key={user.name} user={user} />
                     )
                 }
             </tbody>
@@ -34,10 +32,9 @@ const UsersTable = ({ users = [], selectedUsers = [], onSelected, onDeselected }
 }
 
 export type UsersTableProps = {
-    users?: Array<User>
-    selectedUsers?: Array<string>
-    onSelected: (ids: Array<string>) => any,
-    onDeselected: (ids: Array<string>) => any
+    users?: Array<User>,
+    allSelected?: boolean,
+    onSelectAllChanged?: (checked: boolean) => any
 }
 
 export default UsersTable;

@@ -1,8 +1,9 @@
 import React from 'react';
+import styles from './editableInput.module.css';
 
 const EditableInput = ({ value, editMode = false, disabled = false, onChange }: InputControlProps) => {
     return editMode
-        ? <input data-testid="input" type="text" value={value} disabled={disabled}
+        ? <input className={styles.input} data-testid="input" type="text" value={value} disabled={disabled}
             onChange={e => onChange(e.target.value)} />
         : <span>{value}</span>
 }

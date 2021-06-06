@@ -1,57 +1,64 @@
 import React, { useState } from 'react'
+import { deleteUsers, deselectUsers, selectUsers } from '../../actions/usersActions'
 import PageHeader from '../../components/PageHeader'
 import PaginationControl from '../../components/PaginationControl'
 import SearchBox from '../../components/SearchBox'
 import { ButtonProps, User } from '../../types'
 import UsersTable from './UsersTable'
+import styles from './users.module.css';
 
-const Users = ({ users = [], onDeleteUsers }: UsersProps) => {
+export function getFilteredUsers<T>(users: Array<T>, query: string,
+    comparer: (item: T, q: string) => boolean): Array<T> {
+    if (query) {
+        const filteredData = [
+            ...users.filter((item) => comparer(item, query))];
+        return [...filteredData];
+    } else {
+        return users
+    }
+}
+
+export const pageFilter = (page: number, pageSize: number): ((a: any, i: number) => boolean) =>
+    (a: any, i: number) => i >= (page - 1) * pageSize && i < page * pageSize;
+
+const Users = ({ users = [] }: UsersProps) => {
+    const pageSize = 10;
     const [page, setPage] = useState(1);
-    const [filteredUsers, setFilteredUsers] = useState(users);
-    const [selectedUsers, setSelectedUsers] = useState<Array<string>>([]);
+    const [allSelected, setAllSelected] = useState(false);
+    const [query, setQuery] = useState<string>('');
 
-    const addUserToSelection = (ids: Array<string>) => {
-        ids.forEach(id => {
-            if (selectedUsers.indexOf(id) < 0) {
-                selectedUsers.push(id);
-            }
-        });
-        setSelectedUsers([...selectedUsers])
-    }
+    const totalFilteredUsers = getFilteredUsers(users, query, userComparer);
 
-    const removeUserFromSelection = (ids: Array<string>) => {
-        ids.forEach(id => {
-            const userIndex = selectedUsers.indexOf(id);
-            if (userIndex >= 0) {
-                selectedUsers.splice(userIndex, 1)
-            }
-        });
-        setSelectedUsers([...selectedUsers])
-    }
-
-    const deleteUsers = () => {
-        setFilteredUsers([...filteredUsers.filter(user => selectedUsers.indexOf(user.id) < 0)])
-        onDeleteUsers(selectedUsers)
-    }
+    const filteredUsers = totalFilteredUsers.filter(pageFilter(page, pageSize));
 
     return (
         <div>
             <PageHeader title="Users" />
             <SearchBox
-                data={users}
-                comparer={userComparer}
                 placeholder="Search by name, email or role"
-                onSearch={setFilteredUsers} />
-            <UsersTable users={filteredUsers}
-                selectedUsers={selectedUsers}
-                onSelected={addUserToSelection}
-                onDeselected={removeUserFromSelection}
-            />
-            <div>
-                <DeleteButton onClick={deleteUsers} />
+                onSearch={q => {
+                    setQuery(q);
+                    setPage(1);
+                }} />
+            <UsersTable users={filteredUsers} allSelected={allSelected}
+                onSelectAllChanged={(selected) => {
+                    if (selected) {
+                        selectUsers(filteredUsers.map(u => u.id))
+                    } else {
+                        deselectUsers(filteredUsers.map(u => u.id))
+                    }
+                    setAllSelected(selected)
+                }} />
+            <div className={styles.tableFooter}>
+                <DeleteButton onClick={() => {
+                    deleteUsers(users.filter(u => u.isSelected)
+                        .map(u => u.id))
+                    setAllSelected(false)
+                }} />
                 <PaginationControl page={page}
-                    pageSize={10}
-                    totalItems={users.length}
+                    pageSize={pageSize}
+                    totalItems={totalFilteredUsers.length}
+                    maxPageControls={5}
                     onPageChange={setPage} />
             </div>
         </div>
@@ -60,13 +67,12 @@ const Users = ({ users = [], onDeleteUsers }: UsersProps) => {
 
 const DeleteButton = (props: ButtonProps) => {
     return (
-        <button {...props} >Delete Selected</button>
+        <button {...props} className={styles.deleteAllButton} >Delete Selected</button>
     )
 }
 
 export type UsersProps = {
     users?: Array<User>,
-    onDeleteUsers: (ids: Array<string>) => any
 }
 
 export const userComparer = (user: User, query: string): boolean =>

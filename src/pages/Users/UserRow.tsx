@@ -1,19 +1,21 @@
 import { faEdit, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
+import { deleteUsers, deselectUsers, selectUsers, updateUser } from '../../actions/usersActions';
 import EditableDropDown from '../../components/EditableDropDown';
 import EditableTextInput from '../../components/EditableTextInput';
 import { Role, User } from '../../types';
+import styles from './users.module.css';
 
-const UserRow = ({ user, isSelected, onUpdate, onDelete, onSelected, onDeselected }: UserRowProps) => {
+const UserRow = ({ user }: UserRowProps) => {
     const [editMode, setEditMode] = useState(false);
     const [draftUser, setDraftUser] = useState(user);
 
     const onSelectionChanged = (checked: boolean) => {
         if (checked) {
-            onSelected && onSelected(user.id);
+            selectUsers([user.id]);
         } else {
-            onDeselected && onDeselected(user.id);
+            deselectUsers([user.id]);
         }
     }
 
@@ -22,9 +24,9 @@ const UserRow = ({ user, isSelected, onUpdate, onDelete, onSelected, onDeselecte
     }, [user])
 
     return (
-        <tr>
+        <tr className={`${styles.row} ${user.isSelected ? styles.selectedRow : ''}`}>
             <td>
-                <input type="checkbox" checked={isSelected}
+                <input type="checkbox" checked={user.isSelected}
                     onChange={e => onSelectionChanged(e.target.checked)} />
             </td>
             <td>
@@ -37,7 +39,7 @@ const UserRow = ({ user, isSelected, onUpdate, onDelete, onSelected, onDeselecte
             </td>
             <td>
                 <EditableDropDown data={[Role.Admin, Role.Member]}
-                    value={draftUser.role} editMode={editMode}
+                    value={draftUser.role.toString()} editMode={editMode}
                     onChange={role => setDraftUser({
                         ...draftUser,
                         role: role === Role.Admin.toString() ? Role.Admin : Role.Member
@@ -45,15 +47,15 @@ const UserRow = ({ user, isSelected, onUpdate, onDelete, onSelected, onDeselecte
             </td>
             <td>
                 {!editMode
-                    ? <FontAwesomeIcon icon={faEdit} data-testid={`edit-${user.id}`} onClick={() => {
+                    ? <FontAwesomeIcon className={styles.editButton} icon={faEdit} data-testid={`edit-${user.id}`} onClick={() => {
                         setEditMode(true);
                     }} />
-                    : <FontAwesomeIcon icon={faSave} data-testid={`save-${user.id}`} onClick={() => {
+                    : <FontAwesomeIcon className={styles.saveButton} icon={faSave} data-testid={`save-${user.id}`} onClick={() => {
                         setEditMode(false)
-                        onUpdate && onUpdate(draftUser);
+                        updateUser(draftUser);
                     }} />
                 }
-                <FontAwesomeIcon icon={faTrash} data-testid={`delete-${user.id}`} onClick={() => onDelete && onDelete(user.id)} />
+                <FontAwesomeIcon className={styles.deleteButton} icon={faTrash} data-testid={`delete-${user.id}`} onClick={() => deleteUsers([user.id])} />
             </td>
         </tr>
     )
@@ -62,11 +64,6 @@ const UserRow = ({ user, isSelected, onUpdate, onDelete, onSelected, onDeselecte
 
 export type UserRowProps = {
     user: User,
-    isSelected?: boolean,
-    onUpdate?: (user: User) => any,
-    onDelete?: (id: string) => any,
-    onSelected?: (id: string) => any,
-    onDeselected?: (id: string) => any
 }
 
 export default UserRow;
