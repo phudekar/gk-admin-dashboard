@@ -45,7 +45,7 @@ const UserRow = ({ user }: UserRowProps) => {
                         role: role === Role.Admin.toString() ? Role.Admin : Role.Member
                     })} />
             </td>
-            <td>
+            <td className="right">
                 {!editMode
                     ? <FontAwesomeIcon className={styles.editButton} icon={faEdit} data-testid={`edit-${user.id}`} onClick={() => {
                         setEditMode(true);

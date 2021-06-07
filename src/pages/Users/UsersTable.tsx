@@ -17,7 +17,7 @@ const UsersTable = ({ users = [], allSelected = false, onSelectAllChanged }: Use
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
-                    <th>Actions</th>
+                    <th className="right">Actions</th>
                 </tr>
             </thead>
             <tbody>

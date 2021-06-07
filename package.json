@@ -2,9 +2,9 @@
   "name": "admin-ui",
   "version": "0.1.0",
   "author": {
-    "name" : "Pradip Hudekar",
-    "email" : "pradiphudekar@gmail.com",
-    "url" : "https://in.linkedin.com/in/pradiphudekar"
+    "name": "Pradip Hudekar",
+    "email": "pradiphudekar@gmail.com",
+    "url": "https://in.linkedin.com/in/pradiphudekar"
   },
   "private": true,
   "dependencies": {
@@ -64,6 +64,8 @@
         "statements": 75
       }
     },
-    "coverageReporters": ["text"]
+    "coverageReporters": [
+      "text"
+    ]
   }
 }

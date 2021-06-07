@@ -32,7 +32,7 @@ const Users = ({ users = [] }: UsersProps) => {
     const filteredUsers = totalFilteredUsers.filter(pageFilter(page, pageSize));
 
     return (
-        <div>
+        <div className={styles.page}>
             <PageHeader title="Users" />
             <SearchBox
                 placeholder="Search by name, email or role"

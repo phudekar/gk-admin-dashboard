@@ -1,46 +1,52 @@
+.page {
+  composes: page from "../../App.css";
+}
+
 .usersTable {
-  margin: 40px;
+  margin: auto;
   text-align: left;
-  width: 90%;
+  width: 100%;
 }
 
 .row {
-    color: rgb(65, 65, 65);
+  color: #414141;
 }
 
 .row td {
-    margin: 4px;
+  margin: 4px;
 }
 
 .selectedRow {
-    background: rgb(228 226 226);
+  background: #efefef;
 }
 
-.editButton, .saveButton {
-    color:rgb(85, 85, 85)
+.editButton,
+.saveButton {
+  color: #555555;
 }
 .deleteButton {
-    color: rgb(250, 118, 118);
+  color: #ff5f5f;
 }
 
-.editButton, .saveButton, .deleteButton {
-    margin: 10px;
-    cursor: pointer;
+.editButton,
+.saveButton,
+.deleteButton {
+  margin: 10px;
+  cursor: pointer;
 }
 
 .deleteAllButton {
-    background: rgb(236, 98, 98);
-    border: none;
-    font-size: 1em;
-    margin: 20px;
-    color: white;
-    padding: 12px;
-    border-radius: 4px;
-    cursor: pointer;
+  background: rgb(236, 98, 98);
+  border: none;
+  font-size: 1em;
+  color: white;
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .tableFooter {
-    display: grid;
-    grid-template-columns: 200px 1fr 200px;
-    align-items: center;
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  align-items: center;
 }
