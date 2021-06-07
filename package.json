@@ -52,16 +52,18 @@
   "jest": {
     "collectCoverageFrom": [
       "src/pages/**/*.{js,jsx,ts,tsx}",
+      "src/actions/**/*{js,jsx,ts,tsx}",
+      "src/reducers/**/*{js,jsx,ts,tsx}",
       "src/components/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/",
       "!<rootDir>/path/to/dir/"
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 75,
-        "functions": 75,
-        "lines": 75,
-        "statements": 75
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
       }
     },
     "coverageReporters": [

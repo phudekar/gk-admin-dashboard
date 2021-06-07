@@ -141,3 +141,13 @@ test('should call pageChange on clicking next page', () => {
     fireEvent.click(getByTestId('next-page'))
     expect(pageChanged).toHaveBeenCalledWith(3)
 })
+
+test('should call pageChange on clicking specific page', () => {
+    const pageChanged = jest.fn()
+    const { getByTestId } = render(
+        <PaginationControl page={2} pageSize={2} totalItems={8}
+            maxPageControls={3}
+            onPageChange={pageChanged} />)
+    fireEvent.click(getByTestId('page-3-button'))
+    expect(pageChanged).toHaveBeenCalledWith(3)
+})
